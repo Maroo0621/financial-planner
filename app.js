@@ -350,3 +350,10 @@ if (lastUser && getUsers()[lastUser]) {
   $("#view").innerHTML = ""; // kosongkan tampilan sampai berhasil masuk
   showLogin();
 }
+
+// Daftarkan service worker supaya bisa dipasang dan dibuka offline
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
