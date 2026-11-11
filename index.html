@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personal Finance</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">PF</div>
+        <div><strong>Personal Finance</strong><small>Finance Manager</small></div>
+      </div>
+      <nav class="menu" aria-label="Menu utama">
+        <a href="#" data-page="dashboard" class="active">Dashboard</a>
+        <a href="#" data-page="transaksi">Transaksi</a>
+        <a href="#" data-page="anggaran">Anggaran</a>
+        <a href="#" data-page="tabungan">Tabungan</a>
+        <a href="#" data-page="utang">Utang &amp; Piutang</a>
+        <a href="#" data-page="rutin">Transaksi Rutin</a>
+        <a href="#" data-page="rekening">Rekening</a>
+        <a href="#" data-page="laporan">Laporan</a>
+      </nav>
+      <div class="status-box">
+        <small>Penyimpanan</small>
+        <strong>Tersimpan di browser</strong>
+        <p>Data tidak hilang saat halaman ditutup.</p>
+        <button class="btn" type="button" data-act="reset">Reset data</button>
+      </div>
+    </aside>
+
+    <!-- Seluruh isi halaman ditulis oleh app.js ke elemen ini -->
+    <main class="content" id="view"></main>
+  </div>
+
+  <dialog id="dlg"><form id="form"></form></dialog>
+  <script src="app.js"></script>
+</body>
+</html>
