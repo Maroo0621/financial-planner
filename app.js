@@ -135,7 +135,7 @@ const V = {
         ${card(`<div class="card-head"><h2>Pengeluaran per kategori</h2></div>${cats.map(([c, v]) => `<div class="item"><div class="row foot"><span>${esc(c)}</span><span>${rp(v)} (${pct(v, o)}%)</span></div>${bar((v / mx) * 100)}</div>`).join("") || '<p class="muted">Tidak ada pengeluaran di bulan ini.</p>'}`)}
         ${card(`<div class="card-head"><h2>6 bulan terakhir</h2><small class="muted"><span class="green">■</span> masuk <span class="red">■</span> keluar</small></div><div class="chart">${ms.map((x) => `<div class="col"><div class="pair"><i style="height:${(tot(x, "income") / top) * 100}%;background:var(--green)"></i><i style="height:${(tot(x, "expense") / top) * 100}%;background:var(--red)"></i></div><small class="muted">${BLN[+x.slice(5) - 1]}</small></div>`).join("")}</div>`)}
       </section>` +
-      card(`<div class="card-head"><h2>Data</h2></div><div class="filters"><button class="btn" type="button" data-act="backup">Unduh cadangan (.json)</button><label class="btn">Pulihkan cadangan<input id="rf" type="file" accept=".json" hidden></label><button class="btn" type="button" data-act="reset">Reset ke data contoh</button></div>`);
+      card(`<div class="card-head"><h2>Data</h2></div><div class="filters"><button class="btn" type="button" data-act="backup">Unduh cadangan (.json)</button><label class="btn">Pulihkan cadangan<input id="rf" type="file" accept=".json" hidden></label><button class="btn" type="button" data-act="reset">Hapus semua data</button></div>`);
   },
 };
 
@@ -188,7 +188,7 @@ document.addEventListener("click", (ev) => {
   const b = ev.target.closest("[data-act]");
   if (!b) return;
   const act = b.dataset.act, id = b.dataset.id;
-  if (act === "reset") { if (confirm("Kembalikan semua data ke data contoh? Data Anda akan hilang.")) { state = seed(); commit(); } return; }
+  if (act === "reset") { if (confirm("Hapus semua data akun ini dan mulai dari kosong? Data Anda akan hilang.")) { state = kosong(); commit(); } return; }
   if (act === "backup") { dl("cadangan-keuangan-" + today() + ".json", JSON.stringify(state), "application/json"); return; }
   if (act === "csv") {
     const q = (x) => '"' + String(x).replace(/"/g, '""') + '"';
@@ -258,11 +258,19 @@ async function hashPw(pw, salt) {
   return String(h);
 }
 
+// Data kosong untuk akun baru (tanpa transaksi, anggaran, atau tabungan)
+function kosong() {
+  return {
+    nid: 100,
+    accounts: [{ id: "a1", name: "Tunai", start: 0 }],
+    tx: [], budgets: [], goals: [], debts: [], rec: [],
+  };
+}
 function startSession(name) {
   sessionStorage.setItem(SESSION_KEY, name);
   const dataKey = "pf-data-u-" + name; // setiap pengguna punya data sendiri
   save = function () { try { localStorage.setItem(dataKey, JSON.stringify(state)); } catch (e) {} };
-  try { const s = JSON.parse(localStorage.getItem(dataKey)); state = s && s.tx ? s : seed(); } catch (e) { state = seed(); }
+  try { const s = JSON.parse(localStorage.getItem(dataKey)); state = s && s.tx ? s : kosong(); } catch (e) { state = kosong(); }
   norm(); page = "dashboard"; runRec(); save();
 
   const nav = document.querySelector(".menu");
