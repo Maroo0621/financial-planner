@@ -296,3 +296,5 @@ dialog input:focus-visible, dialog select:focus-visible, .filters input:focus-vi
 .login-card input:focus-visible { outline: 2px solid var(--blue); }
 .login-err { color: var(--red); font-size: 0.85rem; min-height: 1.2em; }
 .link-btn { background: none; border: 0; color: var(--muted); font: inherit; font-size: 0.85rem; cursor: pointer; text-decoration: underline; }
+.login-card label.show-pw { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.login-card label.show-pw input { width: auto; margin: 0; }

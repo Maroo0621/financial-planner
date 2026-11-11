@@ -319,6 +319,13 @@ function showLogin() {
     box.addEventListener("click", (e) => {
       if (e.target.id === "login-switch") { loginMode = loginMode === "login" ? "register" : "login"; showLogin(); }
     });
+        box.addEventListener("change", (e) => {
+      if (e.target.id === "show-pw") {
+        box.querySelectorAll('input[name="pw"], input[name="pw2"]').forEach((i) => {
+          i.type = e.target.checked ? "text" : "password";
+        });
+      }
+    });
   }
   const reg = loginMode === "register";
   box.innerHTML = `<form class="login-card">
@@ -327,6 +334,7 @@ function showLogin() {
     <label>Nama pengguna<input name="usr" autocomplete="username" required maxlength="20"></label>
     <label>Kata sandi<input name="pw" type="password" autocomplete="${reg ? "new-password" : "current-password"}" required></label>
     ${reg ? '<label>Ulangi kata sandi<input name="pw2" type="password" autocomplete="new-password" required></label>' : ""}
+    <label class="show-pw"><input type="checkbox" id="show-pw"> Tampilkan kata sandi</label>
     <p class="login-err" role="alert"></p>
     <button class="btn btn-primary" type="submit">${reg ? "Daftar" : "Masuk"}</button>
     <button class="link-btn" type="button" id="login-switch">${reg ? "Sudah punya akun? Masuk" : "Belum punya akun? Daftar"}</button>
