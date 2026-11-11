@@ -166,12 +166,14 @@ function openForm(e, v, cb) {
     const val = v[f.k] ?? "";
     const inp = f.t === "select"
       ? `<select name="${f.k}">${f.o.map(([a, b]) => `<option value="${esc(a)}"${String(a) === String(val) ? " selected" : ""}>${esc(b)}</option>`).join("")}</select>`
+            : f.t === "number" && f.k !== "day"
+      ? `<input name="${f.k}" type="text" inputmode="numeric" autocomplete="off" maxlength="18" data-rp data-min="${f.min ?? 0}" value="${val === "" ? "" : Number(val).toLocaleString("id-ID")}"${f.req ? " required" : ""}>`
       : `<input name="${f.k}" type="${f.t}" value="${esc(val)}"${f.req ? " required" : ""}${f.t === "number" ? ` min="${f.min ?? 0}"${f.max ? ` max="${f.max}"` : ""} step="any" inputmode="decimal"` : ' maxlength="60"'}>`;
     return `<label>${f.l}${inp}</label>`;
   }).join("") + `<div class="form-actions"><button class="btn" type="button" data-cancel>Batal</button><button class="btn btn-primary" type="submit">Simpan</button></div>`;
   submitCb = () => {
     const fd = new FormData($("#form")), o = {};
-    fs.forEach((f) => { const x = fd.get(f.k); o[f.k] = f.t === "number" ? Number(x || 0) : String(x ?? "").trim(); });
+    fs.forEach((f) => { const x = fd.get(f.k); o[f.k] = f.t === "number" ? Number(String(x || "").replace(/\./g, "")) || 0 : String(x ?? "").trim(); });
     cb(e.fix ? e.fix(o) : o);
   };
   $("#dlg").showModal();
@@ -208,7 +210,7 @@ document.addEventListener("click", (ev) => {
     return;
   }
   if (verb === "dep") {
-    const n = Number(prompt('Setor berapa rupiah ke "' + item.name + '"? (angka negatif untuk menarik)'));
+    const n = Number(String(prompt('Setor berapa rupiah ke "' + item.name + '"? (angka negatif untuk menarik)') || "").replace(/\./g, ""));
     if (n && !isNaN(n)) { item.saved = Math.max(0, item.saved + n); commit(); }
     return;
   }
@@ -365,3 +367,18 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(() => {});
   });
 }
+
+// Pemisah ribuan otomatis saat mengetik nominal
+document.addEventListener("input", (ev) => {
+  const t = ev.target;
+  if (!t.hasAttribute || !t.hasAttribute("data-rp")) return;
+  const left = t.value.slice(0, t.selectionStart).replace(/\D/g, "").length;
+  const digits = t.value.replace(/\D/g, "").replace(/^0+(?=\d)/, "");
+  t.value = digits ? Number(digits).toLocaleString("id-ID") : "";
+  t.setCustomValidity(digits !== "" && Number(digits) < Number(t.dataset.min) ? "Isi minimal " + t.dataset.min : "");
+  if (document.activeElement === t) {
+    let i = 0, n = 0;
+    while (i < t.value.length && n < left) { if (/\d/.test(t.value[i])) n++; i++; }
+    t.setSelectionRange(i, i);
+  }
+});
