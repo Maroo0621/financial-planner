@@ -298,3 +298,4 @@ dialog input:focus-visible, dialog select:focus-visible, .filters input:focus-vi
 .link-btn { background: none; border: 0; color: var(--muted); font: inherit; font-size: 0.85rem; cursor: pointer; text-decoration: underline; }
 .login-card label.show-pw { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .login-card label.show-pw input { width: auto; margin: 0; }
+.logo { background: url("logo.svg") center / cover no-repeat; font-size: 0; color: transparent; }
