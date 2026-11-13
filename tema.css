@@ -1,0 +1,85 @@
+/* ===== TEMA & TAMPILAN BARU (dimuat setelah style.css) ===== */
+:root {
+  --radius: 14px;
+  --fs: 16px;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.25);
+  --grad: linear-gradient(135deg, var(--blue), color-mix(in srgb, var(--blue) 55%, #8b5cf6));
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f1f4f9; --panel: #ffffff; --line: #e2e8f0; --text: #162033; --muted: #64748b;
+  --green: #138a5e; --red: #d6455d;
+  --shadow: 0 1px 2px rgba(16,24,40,.06), 0 10px 30px rgba(16,24,40,.08);
+  color-scheme: light;
+}
+html { font-size: var(--fs); }
+
+body {
+  background:
+    radial-gradient(900px 500px at 105% -10%, color-mix(in srgb, var(--blue) 22%, transparent), transparent 65%),
+    radial-gradient(700px 400px at -10% 110%, color-mix(in srgb, var(--green) 14%, transparent), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* Menu */
+.sidebar { background: color-mix(in srgb, var(--panel) 80%, transparent); backdrop-filter: blur(10px); }
+.logo { border-radius: calc(var(--radius) - 2px); box-shadow: 0 6px 18px color-mix(in srgb, var(--blue) 45%, transparent); }
+.menu a { border-radius: calc(var(--radius) - 4px); transition: background .15s, color .15s, transform .15s; }
+.menu a:hover { transform: translateX(2px); }
+.menu a.active { background: var(--grad); color: #fff; box-shadow: 0 6px 16px color-mix(in srgb, var(--blue) 35%, transparent); }
+.status-box { border-radius: var(--radius); background: color-mix(in srgb, var(--panel) 70%, transparent); }
+
+/* Judul, kartu, angka */
+.page-head h1 { font-size: 2rem; letter-spacing: -0.02em; }
+.card { border-radius: var(--radius); box-shadow: var(--shadow); background: color-mix(in srgb, var(--panel) 92%, transparent); }
+.big { font-size: 1.65rem; letter-spacing: -0.02em; }
+.stats .card { position: relative; overflow: hidden; }
+.stats .card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--grad); }
+@media (hover: hover) {
+  .stats .card { transition: transform .2s; }
+  .stats .card:hover { transform: translateY(-3px); }
+}
+body[data-page="dashboard"] .stats .card:first-child { background: var(--grad); border-color: transparent; color: #fff; }
+body[data-page="dashboard"] .stats .card:first-child::before { display: none; }
+body[data-page="dashboard"] .stats .card:first-child small { color: rgba(255,255,255,.85); }
+
+/* Progress bar */
+.bar { height: 8px; }
+.bar span { background: linear-gradient(90deg, var(--green), color-mix(in srgb, var(--green) 55%, #9ef0c8)); }
+.bar.over span { background: linear-gradient(90deg, var(--red), color-mix(in srgb, var(--red) 60%, #ffb0a8)); }
+
+/* Tombol */
+.btn { border-radius: calc(var(--radius) - 4px); transition: background .15s, transform .1s, filter .15s; }
+.btn:hover { background: color-mix(in srgb, var(--text) 7%, transparent); }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--grad); border-color: transparent; color: #fff; box-shadow: 0 6px 16px color-mix(in srgb, var(--blue) 35%, transparent); }
+.btn-primary:hover { background: var(--grad); filter: brightness(1.08); }
+
+/* Tabel */
+th { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+tbody tr { transition: background .15s; }
+tbody tr:hover { background: color-mix(in srgb, var(--text) 5%, transparent); }
+
+/* Form, pop-up, login */
+dialog, .login-card { border-radius: calc(var(--radius) + 4px); box-shadow: var(--shadow); }
+dialog input, dialog select, .login-card input, .filters input, .filters select { border-radius: calc(var(--radius) - 6px); }
+#login { background: radial-gradient(800px 500px at 100% 0, color-mix(in srgb, var(--blue) 25%, transparent), transparent 65%), var(--bg); }
+
+/* Halaman Pengaturan */
+.set-row { padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.set-row:last-child { border-bottom: 0; }
+.set-row h2 { font-size: .95rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--text); font: inherit; font-size: .85rem; cursor: pointer; }
+.chip.on { background: var(--grad); border-color: transparent; color: #fff; font-weight: 600; }
+.swatch { width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--panel); cursor: pointer; box-shadow: 0 0 0 1px var(--line); }
+.swatch.on { box-shadow: 0 0 0 3px var(--text); }
+
+/* HP: menu bawah melayang */
+@media (max-width: 768px) {
+  .sidebar { left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); border: 1px solid var(--line); border-radius: calc(var(--radius) + 6px); box-shadow: var(--shadow); }
+  .content { padding-bottom: 120px; }
+  .page-head h1 { font-size: 1.6rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
