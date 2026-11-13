@@ -44,8 +44,8 @@
 
   // Tandai halaman aktif di <body> (dipakai CSS untuk kartu utama dashboard)
   const renderAsli = render;
-  render = function () { renderAsli(); document.body.dataset.page = page; };
-  document.body.dataset.page = page;
+  render = function () { renderAsli(); document.body.dataset.view = page; };
+  document.body.dataset.view = page;
 
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-set]");

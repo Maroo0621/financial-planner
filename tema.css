@@ -33,16 +33,16 @@ body {
 /* Judul, kartu, angka */
 .page-head h1 { font-size: 2rem; letter-spacing: -0.02em; }
 .card { border-radius: var(--radius); box-shadow: var(--shadow); background: color-mix(in srgb, var(--panel) 92%, transparent); }
-.big { font-size: 1.65rem; letter-spacing: -0.02em; }
+.big { font-size: 1.35rem; letter-spacing: -0.02em; }
 .stats .card { position: relative; overflow: hidden; }
 .stats .card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--grad); }
 @media (hover: hover) {
   .stats .card { transition: transform .2s; }
   .stats .card:hover { transform: translateY(-3px); }
 }
-body[data-page="dashboard"] .stats .card:first-child { background: var(--grad); border-color: transparent; color: #fff; }
-body[data-page="dashboard"] .stats .card:first-child::before { display: none; }
-body[data-page="dashboard"] .stats .card:first-child small { color: rgba(255,255,255,.85); }
+body[data-view="dashboard"] .stats .card:first-child { background: var(--grad); border-color: transparent; color: #fff; }
+body[data-view="dashboard"] .stats .card:first-child::before { display: none; }
+body[data-view="dashboard"] .stats .card:first-child small { color: rgba(255,255,255,.85); }
 
 /* Progress bar */
 .bar { height: 8px; }
