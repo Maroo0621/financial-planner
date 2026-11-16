@@ -1,6 +1,6 @@
 {
-  "name": "Personal Finance",
-  "short_name": "Keuangan",
+  "name": "Aurevia - Personal Finance",
+  "short_name": "Aurevia",
   "description": "Pencatat keuangan pribadi dan keluarga",
   "start_url": "./",
   "scope": "./",
