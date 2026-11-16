@@ -57,7 +57,7 @@
     const salam = jam < 11 ? "Selamat pagi" : jam < 15 ? "Selamat siang" : jam < 19 ? "Selamat sore" : "Selamat malam";
     const user = sessionStorage.getItem("pf-session");
     const sub = v.querySelector(".page-head p.muted");
-    if (sub) sub.textContent = salam + (user ? ", " + user : "") + " 👋";
+    if (sub) sub.textContent = salam + (user ? ", " + user.split("@")[0] : "") + " 👋";
 
     const m = mo();
     const semua = [...new Set([...KAT, ...state.tx.filter((t) => t.type === "expense").map((t) => t.cat)])];
@@ -141,6 +141,7 @@
   const renderSebelumnya = render;
   render = function () { renderSebelumnya(); setelahRender(); };
 
+  window.hiasReset = () => { lastSnap = JSON.stringify(state); };
   obs = new MutationObserver(() => enhance());
   lastUser = sessionStorage.getItem("pf-session") || "";
   lastSnap = JSON.stringify(state);
