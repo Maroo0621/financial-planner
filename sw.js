@@ -1,7 +1,7 @@
 // Service worker: membuat aplikasi tetap bisa dibuka tanpa internet.
 // Strategi: coba ambil versi terbaru dari internet; jika offline, pakai salinan tersimpan.
-const CACHE = "pf-cache-v4";
-const FILES = ["./", "index.html", "style.css", "app.js", "tema.css", "tema.js", "hias.css", "hias.js", "sinkron.js", "manifest.json", "logo.svg", "icon-192.png", "icon-512.png", "animasi.js"];
+const CACHE = "pf-cache-v5";
+const FILES = ["./", "index.html", "style.css", "app.js", "tema.css", "tema.js", "hias.css", "hias.js", "sinkron.js", "manifest.json", "logo.svg", "icon-192.png", "icon-512.png", "animasi.js", "favorit.js"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
